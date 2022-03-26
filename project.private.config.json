@@ -1,24 +1,32 @@
 {
-    "condition": {
-        "plugin": {
-            "list": []
+  "setting": {},
+  "condition": {
+    "plugin": {
+      "list": []
+    },
+    "game": {
+      "list": []
+    },
+    "gamePlugin": {
+      "list": []
+    },
+    "miniprogram": {
+      "list": [
+        {
+          "name": "",
+          "pathName": "pages/category/category",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
         },
-        "game": {
-            "list": []
-        },
-        "gamePlugin": {
-            "list": []
-        },
-        "miniprogram": {
-            "list": [
-                {
-                    "name": "",
-                    "pathName": "pages/category/category",
-                    "query": "",
-                    "scene": null,
-                    "launchMode": "default"
-                }
-            ]
+        {
+          "name": "",
+          "pathName": "pages/category/category",
+          "query": "",
+          "scene": null,
+          "launchMode": "default"
         }
+      ]
     }
+  }
 }
