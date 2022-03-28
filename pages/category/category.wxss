@@ -1,10 +1,50 @@
 /* pages/category/category.wxss */
 page {
+  height: 100%;
+}
+.cates {
+  height: 100%;
+}
+.cates .cates_container {
+  /*less中使用calc会直接计算出结果，如果要原样输出就通过~''包起来*/
+  height: calc(100vh - 90rpx);
   display: flex;
 }
-.left_menu {
+.cates .cates_container .left_menu {
+  /*flex是伸缩盒子，这里2表示成为子项，则默认高度是100%*/
   flex: 2;
 }
-.right_content {
+.cates .cates_container .left_menu .menu_item {
+  height: 80rpx;
+  display: flex;
+  justify-content: center;
+  /*文字水平*/
+  align-items: center;
+  /*垂直居中*/
+  font-size: 30rpx;
+}
+.cates .cates_container .left_menu .active {
+  color: var(--themeColor);
+  border-left: 5rpx solid currentColor;
+}
+.cates .cates_container .right_content {
   flex: 5;
+}
+.cates .cates_container .right_content .goods_group .goods_title {
+  height: 80rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.cates .cates_container .right_content .goods_group .goods_title .delimeter {
+  color: #ccc;
+  padding: 0 10rpx;
+}
+.cates .cates_container .right_content .goods_group .goods_list {
+  display: flex;
+  flex-wrap: wrap;
+}
+.cates .cates_container .right_content .goods_group .goods_list navigator {
+  width: 33.33%;
+  text-align: center;
 }

@@ -9,7 +9,9 @@ Page({
         /*左侧菜单数据*/
         leftMenuList:[],
         /*右侧内容数据*/
-        rightContent:[]
+        rightContent:[],
+        /*被点击左侧的菜单选中的索引*/
+        currentIndex:0
     },
     /*接口返回的数据*/
     Cates:[],

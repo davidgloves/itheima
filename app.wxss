@@ -20,3 +20,7 @@ page{
     */
     font-size: 28rpx;
 }
+/*一般小程序里图片的宽度都是100%所以在全局的wxss文件里直接指定全局image是100%*/
+image{
+    width: 100%;
+}
