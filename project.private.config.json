@@ -1,32 +1,32 @@
 {
-  "setting": {},
-  "condition": {
-    "plugin": {
-      "list": []
-    },
-    "game": {
-      "list": []
-    },
-    "gamePlugin": {
-      "list": []
-    },
-    "miniprogram": {
-      "list": [
-        {
-          "name": "",
-          "pathName": "pages/category/category",
-          "query": "",
-          "launchMode": "default",
-          "scene": null
+    "setting": {},
+    "condition": {
+        "plugin": {
+            "list": []
         },
-        {
-          "name": "",
-          "pathName": "pages/category/category",
-          "query": "",
-          "scene": null,
-          "launchMode": "default"
+        "game": {
+            "list": []
+        },
+        "gamePlugin": {
+            "list": []
+        },
+        "miniprogram": {
+            "list": [
+                {
+                    "name": "",
+                    "pathName": "pages/category/category",
+                    "query": "",
+                    "launchMode": "default",
+                    "scene": null
+                },
+                {
+                    "name": "",
+                    "pathName": "pages/goods_list/goods_list",
+                    "query": "cid=5",
+                    "scene": null,
+                    "launchMode": "default"
+                }
+            ]
         }
-      ]
     }
-  }
 }

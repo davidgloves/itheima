@@ -15,7 +15,7 @@ Page({
         /*被点击左侧的菜单选中的索引*/
         currentIndex: 0,
         /**控制点击某一菜单时可以让右侧内容直接置顶 */
-        scrollTop:0
+        scrollTop: 0
     },
     /*接口返回的数据*/
     Cates: [],
@@ -36,7 +36,7 @@ Page({
             this.getCateList();
         } else {
             //有旧数据则判断是否过期,假设过期时间是10秒,1000是毫秒,
-            if (Date.now() - Cates.time > 1000 * 64*64) {
+            if (Date.now() - Cates.time > 1000 * 64 * 64) {
                 this.getCateList();
             } else {
                 //不过期，可以使用旧数据
@@ -50,25 +50,43 @@ Page({
             }
         }
     },
-    getCateList() {
-        request({
-                url: "/categories"
-            })
-            .then(result => {
-                this.Cates = result;
-                // 存储获取到的数据
-                wx.setStorageSync('cates', {
-                    time: Date.now(),
-                    data: result
-                })
-                /**构造左侧大菜单的数据 */
-                let leftMenuList = this.Cates.map(v => v.cat_name);
-                let rightContent = this.Cates[0].children;
-                this.setData({
-                    leftMenuList,
-                    rightContent
-                });
-            })
+    async getCateList() {
+        // request({
+        //         url: "/categories"
+        //     })
+        //     .then(result => {
+        //         this.Cates = result;
+        //         // 存储获取到的数据
+        //         wx.setStorageSync('cates', {
+        //             time: Date.now(),
+        //             data: result
+        //         })
+        //         /**构造左侧大菜单的数据 */
+        //         let leftMenuList = this.Cates.map(v => v.cat_name);
+        //         let rightContent = this.Cates[0].children;
+        //         this.setData({
+        //             leftMenuList,
+        //             rightContent
+        //         });
+        //     })
+        // 使用async和await 语法来发送请求。这里的await请求返回结果之前代码是不会向下执行的.在首页的js中，
+        // 由于前后多个请求没有先后关系 所以可以不使用async语法
+        const result = await request({
+            url: "/categories"
+        });
+        this.Cates = result;
+        // 存储获取到的数据
+        wx.setStorageSync('cates', {
+            time: Date.now(),
+            data: result
+        })
+        /**构造左侧大菜单的数据 */
+        let leftMenuList = this.Cates.map(v => v.cat_name);
+        let rightContent = this.Cates[0].children;
+        this.setData({
+            leftMenuList,
+            rightContent
+        });
     },
     /*左侧菜单的点击事件 */
     handleItemTap(e) {
@@ -85,7 +103,7 @@ Page({
             currentIndex: index,
             rightContent,
             // scrollTop置为0，可以控制右侧内容在左边菜单点击时是置顶的
-            scrollTop:0
+            scrollTop: 0
         });
     },
 
