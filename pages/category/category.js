@@ -55,11 +55,11 @@ Page({
                 url: "/categories"
             })
             .then(result => {
-                this.Cates = result.data.message;
+                this.Cates = result;
                 // 存储获取到的数据
                 wx.setStorageSync('cates', {
                     time: Date.now(),
-                    data: result.data.message
+                    data: result
                 })
                 /**构造左侧大菜单的数据 */
                 let leftMenuList = this.Cates.map(v => v.cat_name);
