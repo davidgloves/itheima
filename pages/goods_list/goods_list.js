@@ -1,4 +1,21 @@
 // pages/goods_list/goods_list.js
+/**
+ * 上滑页面触底加载下一页
+ * 1 找到触底事件
+ * 2 判断是否还存在下一页数据
+ *  怎么判断，
+ *  1  获取总页数，目前只有总条数。则总页数=Match.ceil(total(总条数)/pagesize(页容量))
+ *  2  获取当前页码
+ *  3  用当前页码与总页数进行对比
+ * 3 假如没有下一页则弹框提示
+ * 4 如果还有下一页就加载下一页数据
+ *  1 当前页码++
+ *  2 发送请求获取下一页数据，回调里要把新获取回来的内容追加到原数组中
+ */
+
+
+import {request} from "../../request/index.js"
+
 Page({
 
     /**
@@ -21,8 +38,18 @@ Page({
                 value:"价格",
                 isActive:false
             }
-        ]
+        ],
+        goodsList:[]
     },
+    /**获取接口需要的参数 */
+    QueryParams:{
+        query:"",
+        cid:"",
+        pagenum:1,
+        pagesize:10
+    },
+    /**总页数 */
+    totalPage:1,
     handleTabsItemChange(e){
         // 获取子向父组件传递的值
         const {index} = e.detail;
@@ -32,12 +59,25 @@ Page({
             tabs
         })
     },
+    async getGoddsList() {
+        const result = await request({
+            url: "/goods/search",
+            data:this.QueryParams
+        });
+        const total = result.total;
+        this.totalPage = Math.ceil(total/this.QueryParams.pagesize);
+        this.setData({
+            /**数组拼接 */
+            goodsList:[...this.data.goodsList,...result.goods]
+        })
+    },
 
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
-        console.log(options)
+        this.QueryParams.cid=options.cid;
+        this.getGoddsList();
     },
 
     /**
@@ -79,7 +119,14 @@ Page({
      * 页面上拉触底事件的处理函数
      */
     onReachBottom: function () {
-
+        if (this.QueryParams.pagenum>=this.totalPage) {
+            wx.showToast({
+              title: '没有下一页了',
+            });
+        } else {
+            this.QueryParams.pagenum++;
+            this.getGoddsList();
+        }
     },
 
     /**
