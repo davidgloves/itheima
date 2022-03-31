@@ -11,6 +11,9 @@
  * 4 如果还有下一页就加载下一页数据
  *  1 当前页码++
  *  2 发送请求获取下一页数据，回调里要把新获取回来的内容追加到原数组中
+ * 5 下拉刷新
+ *  1.　先在page.json中开启下拉刷新，找到下拉刷新的方法
+ *  2.　下拉刷新需要页面内容数据清空。页码重置为1
  */
 
 
@@ -48,6 +51,7 @@ Page({
         pagenum:1,
         pagesize:10
     },
+    isPullDownRefresh:false,
     /**总页数 */
     totalPage:1,
     handleTabsItemChange(e){
@@ -70,6 +74,11 @@ Page({
             /**数组拼接 */
             goodsList:[...this.data.goodsList,...result.goods]
         })
+        // 由于下拉刷新自动关闭时间较长，所以这里手动调用一下，
+        if (this.isPullDownRefresh) {
+            wx.stopPullDownRefresh();
+            this.isPullDownRefresh=false;
+        }
     },
 
     /**
@@ -112,7 +121,16 @@ Page({
      * 页面相关事件处理函数--监听用户下拉动作
      */
     onPullDownRefresh: function () {
-
+        // 列表内容清空
+        this.setData({
+            goodsList:[]
+        });
+        // 页码置为1
+        this.QueryParams.pagenum=1;
+        //　设置触发了下拉刷新
+        this.isPullDownRefresh=true;
+        //　获取最新数据
+        this.getGoddsList();
     },
 
     /**
