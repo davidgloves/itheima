@@ -25,7 +25,12 @@ Page({
         });
         const goodsDetail = result;
         this.setData ({
-            goodsDetail
+            goodsDetail:{
+                goods_name:goodsDetail.goods_name,
+                goods_price:goodsDetail.goods_price,
+                goods_introduce:goodsDetail.goods_introduce,
+                pics:goodsDetail.pics
+            }
         })
     },
 
