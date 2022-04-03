@@ -1,2 +1,25 @@
-<!--pages/goos_detail/goos_detail.wxml-->
-<text>pages/goos_detail/goos_detail.wxml</text>
+<view class="detail_swiper">
+    <swiper indicator-dots="true" indicator-color="rgba(0,0,0,.3)" autoplay="true" 
+        interval="5000" duration="1000" circular="true">
+        <swiper-item wx:for="{{goodsDetail.pics}}" wx:key="pics_id">
+            <image src="{{item.pics_mid}}" mode="widthFix"/>
+        </swiper-item>
+    </swiper>
+</view>
+<view class="goods_price">￥{{goodsDetail.goods_price}}</view>
+<view class="goods_name_row">
+    <view class="goods_name">{{goodsDetail.goods_name}}</view>
+    <view class="goods_collect">
+        <text class="iconfont icon-shoucang"></text>
+        <view class="collect_text">收藏</view>
+    </view>
+</view>
+<view class="goods_info">
+    <view class="goods_info_title">图文详情</view>
+    <view class="goods_info_content">
+        <!--富文本标签-->
+        <rich-text class="" nodes="{{goodsDetail.goods_introduce}}">
+        </rich-text>
+          
+    </view>
+</view>
