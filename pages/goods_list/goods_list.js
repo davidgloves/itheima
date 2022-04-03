@@ -17,7 +17,7 @@
  */
 
 
-import {request} from "../../request/index.js"
+import {copyArr, request} from "../../request/index.js"
 
 Page({
 
@@ -29,7 +29,7 @@ Page({
             {
                 id:0,
                 value:"综合",
-                isActive:true
+                isActive:false
             },
             {
                 id:1,
@@ -39,10 +39,11 @@ Page({
             {
                 id:2,
                 value:"价格",
-                isActive:false
+                isActive:true
             }
         ],
-        goodsList:[]
+        goodsList:[],
+        goodsPriceList:[]
     },
     /**获取接口需要的参数 */
     QueryParams:{
@@ -58,6 +59,9 @@ Page({
         // 获取子向父组件传递的值
         const {index} = e.detail;
         let {tabs} = this.data;
+        // if (index===2) {
+        //     this.getGoodsPriceList();
+        // }
         tabs.forEach((v,i)=>i===index?v.isActive=true:v.isActive=false);
         this.setData({
             tabs
@@ -79,12 +83,23 @@ Page({
             wx.stopPullDownRefresh();
             this.isPullDownRefresh=false;
         }
+        this.getGoodsPriceList();
+    },
+    getGoodsPriceList(){
+        let priceList = copyArr(this.data.goodsList);
+        priceList.sort(function(a,b) {
+            return a.goods_price-b.goods_price
+        });
+        this.setData({
+            goodsPriceList:priceList
+        });
     },
 
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
+
         this.QueryParams.cid=options.cid;
         this.getGoddsList();
     },

@@ -31,3 +31,8 @@ export const request=(params)=>{
         });          
     })
 }
+export function copyArr(oldArr){
+    let newArr = [];
+    newArr = JSON.parse(JSON.stringify(oldArr));
+    return newArr;
+}
