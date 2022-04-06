@@ -1,8 +1,9 @@
+<!--商品图片轮播-->
 <view class="detail_swiper">
     <swiper indicator-dots="true" indicator-color="rgba(0,0,0,.3)" autoplay="true" 
         interval="5000" duration="1000" circular="true">
         <swiper-item wx:for="{{goodsDetail.pics}}" wx:key="pics_id">
-            <image src="{{item.pics_mid}}" mode="widthFix"/>
+            <image src="{{item.pics_mid}}" mode="widthFix" bind:tap="handleImageTap" data-index="{{index}}"/>
         </swiper-item>
     </swiper>
 </view>
@@ -21,5 +22,31 @@
         <rich-text class="" nodes="{{goodsDetail.goods_introduce}}">
         </rich-text>
           
+    </view>
+</view>
+<view class="btn_tools">
+    <view class="tool_item">
+        <view class="iconfont icon-kefu"></view>
+        <view>
+            联系客服
+        </view>
+    </view>
+    <view class="tool_item">
+        <view class="iconfont icon-fenxiang"></view>
+        <view>
+            分享
+        </view>
+    </view>
+    <view class="tool_item">
+        <view class="iconfont icon-gouwuche"></view>
+        <view>
+            购物车
+        </view>
+    </view>
+    <view class="tool_item btn_cart">
+        加入购物车
+    </view>
+    <view class="tool_item btn_buy">
+        立即购买
     </view>
 </view>

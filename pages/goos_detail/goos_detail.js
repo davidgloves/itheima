@@ -33,6 +33,18 @@ Page({
             }
         })
     },
+    /**轮播图预览功能,放大图片预览 */
+    handleImageTap(e){
+        /**获取点击的图片的索引 */
+        const {index} = e.currentTarget.dataset;
+        /**构造要预览的图片集的数组 */
+        let previewPics = this.data.goodsDetail["pics"].map(v=>v.pics_big);
+        wx.previewImage({
+            current: previewPics[index],
+            urls: previewPics
+        });
+          
+    },
 
     /**
      * 生命周期函数--监听页面初次渲染完成
