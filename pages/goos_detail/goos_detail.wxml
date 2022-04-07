@@ -30,19 +30,22 @@
         <view>
             联系客服
         </view>
+        <button open-type="contact"></button>
     </view>
     <view class="tool_item">
         <view class="iconfont icon-fenxiang"></view>
         <view>
             分享
         </view>
+        <button open-type="share"></button>
     </view>
-    <view class="tool_item">
+    <!--navigator 需要用switchTab的opentype才可以跳转到tabbar页面-->
+    <navigator open-type="switchTab" url="/pages/cart/cart" class="tool_item">
         <view class="iconfont icon-gouwuche"></view>
         <view>
             购物车
         </view>
-    </view>
+    </navigator>
     <view class="tool_item btn_cart">
         加入购物车
     </view>
