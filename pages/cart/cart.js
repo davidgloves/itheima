@@ -1,4 +1,8 @@
-// pages/cart/cart.js
+/**
+ * 获取用户的收货地址
+ * 1. 绑定点击事件
+ * 2. 调用小程序内置API获取用户的收货地址wx.chooseAddress
+ */
 Page({
 
     /**
@@ -6,6 +10,25 @@ Page({
      */
     data: {
 
+    },
+    handleChooseAddress(){
+        /**
+         * cityName: "Guangzhou Shi"
+countyName: "Haizhu Qu"
+detailInfo: "397 Xingang Middle Rd, KeCun"
+errMsg: "chooseAddress:ok"
+nationalCode: "510000"
+postalCode: "510000"
+provinceName: "Guangdong Sheng"
+telNumber: "020-81167888"
+userName: "John Doe"
+         */
+        wx.chooseAddress({
+            success: (address) => {
+                wx.setStorageSync("address", address);
+                  
+            }
+        });
     },
 
     /**
