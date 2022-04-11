@@ -1,1 +1,11 @@
-/* pages/cart/cart.wxss */
+.address_info {
+  display: flex;
+  padding: 20rpx;
+}
+.address_info .user_info {
+  flex: 5;
+}
+.address_info .user_phone {
+  flex: 3;
+  text-align: right;
+}

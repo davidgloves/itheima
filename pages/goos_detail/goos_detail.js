@@ -65,7 +65,7 @@ Page({
         // } else {
         //     cart = [];
         // }
-        console.log(cart)
+        
         // 判断当前商品对象是否存在于缓存中,这里不能直接用goodsDetail因为对象有可能会变
         // let index = cart.findIndex(this.data.goodsDetail)
         //　但是商品对象的goods_id不会变，所以需要用goods_id来获取index

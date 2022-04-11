@@ -1,5 +1,35 @@
 <view class="revice_address_row">
-    <view class="address_btn">
+<!--通过if和else来判断，有地址时显示地址，无地址时显示按钮，由于空对象类型的bool值也是true所以用对象里的某一个key来作为判断条件-->
+    <view class="address_btn" wx:if="{{!address.userName}}">
         <button bind:tap="handleChooseAddress" type="primary" plain="{{true}}">获取收货地址</button>
+    </view>
+    <view class="address_info" wx:else>
+        <view class="user_info">
+            <view>
+                收货人：{{address.userName}}
+            </view>
+            <view>
+                {{address.all}}
+            </view>
+        </view>
+        <view class="user_phone">{{address.telNumber}}</view>
+    </view>
+</view>
+<view class="cart_content" wx:for="{{cart}}" wx:key="goods_id">
+    <view class="cart_title">购物车</view>
+    <view class="cart_main">
+        <view class="cart_item">
+            <!---->
+            <view class="cart_chk_wrap">
+                <checkbox-group bindchange="">
+                    <checkbox/>
+                </checkbox-group>
+            </view>
+            <navigator class="cart_img_wrap" target="" url="" hover-class="navigator-hover" open-type="navigate">
+                <image src="{{item.pics[0].pics_mid}}" mode="widthFix" lazy-load="false" binderror="" bindload="" />
+                  
+            </navigator>
+            <view class="cart_info_wrap"></view>
+        </view>
     </view>
 </view>

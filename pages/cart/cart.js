@@ -9,7 +9,8 @@ Page({
      * 页面的初始数据
      */
     data: {
-
+        address:{},
+        cart:[]
     },
     handleChooseAddress(){
         /**
@@ -35,7 +36,10 @@ userName: "John Doe"
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
-
+        const cart = wx.getStorageSync("cart")||[];
+        this.setData({
+            cart
+        })
     },
 
     /**
@@ -49,7 +53,12 @@ userName: "John Doe"
      * 生命周期函数--监听页面显示
      */
     onShow: function () {
-
+        // 因为页面需要在被频繁的显示时获取缓存中的地址信息，比如用户切换地址时的场景，所以在onShow里实现而不是onLoad
+        let address = wx.getStorageSync("address");
+        address.all = address.provinceName+address.cityName+address.countyName+address.detailInfo;
+        this.setData({
+            address
+        })  
     },
 
     /**
