@@ -58,7 +58,11 @@ userName: "John Doe"
         address.all = address.provinceName+address.cityName+address.countyName+address.detailInfo;
         this.setData({
             address
-        })  
+        });  
+        const cart = wx.getStorageSync("cart")||[];
+        this.setData({
+            cart
+        });
     },
 
     /**
