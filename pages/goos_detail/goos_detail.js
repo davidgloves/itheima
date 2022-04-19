@@ -73,6 +73,7 @@ Page({
         if(index===-1) {
             // -1表示不存在,先添加一个num属性并赋值1，
             this.data.goodsDetail.num = 1;
+            this.data.goodsDetail.checked = true;
             cart.push(this.data.goodsDetail);
         } else {
             // 如果已经存在，num+1

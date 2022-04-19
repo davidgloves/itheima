@@ -10,7 +10,10 @@ Page({
      */
     data: {
         address:{},
-        cart:[]
+        cart:[],
+        allChecked:false,
+        totalPrice:0,
+        totalNum:0
     },
     handleChooseAddress(){
         /**
@@ -55,13 +58,37 @@ userName: "John Doe"
     onShow: function () {
         // 因为页面需要在被频繁的显示时获取缓存中的地址信息，比如用户切换地址时的场景，所以在onShow里实现而不是onLoad
         let address = wx.getStorageSync("address");
-        address.all = address.provinceName+address.cityName+address.countyName+address.detailInfo;
-        this.setData({
-            address
-        });  
+        if (address.cityName) {
+            address.all = address.provinceName+address.cityName+address.countyName+address.detailInfo;
+            this.setData({
+                address
+            });
+        }
         const cart = wx.getStorageSync("cart")||[];
+        /**
+         * every数组方法会遍历会接收一个回调函数，如果每一个回调函数都返回true
+         * 那么every方法返回true，只要有一个回调函数返回false，循环不再执行，直接返回false
+         * 空数组调用every也是true
+         */
+        // const allChecked = cart.length>0 ? cart.every(v=>v.checked):false;
+        //因为循环了两次浪费性能所以用如下方式
+        let allChecked=true;
+        let totalPrice=0;
+        let totalNum=0;
+        cart.forEach(v=>{
+            if(v.checked) {
+                totalPrice+=v.num*v.goods_price;
+                totalNum+=v.num
+            } else {
+                allChecked=false;
+            }
+        });
+        allChecked=cart.length>0 ? allChecked : false;
         this.setData({
-            cart
+            cart,
+            allChecked,
+            totalPrice,
+            totalNum
         });
     },
 
