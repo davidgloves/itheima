@@ -71,6 +71,24 @@ userName: "John Doe"
          * 空数组调用every也是true
          */
         // const allChecked = cart.length>0 ? cart.every(v=>v.checked):false;
+        this.setCart(cart);
+    },
+    /**购物车选中，1.　修改购物车的选中状态，需要写回缓存，写回data，重新计算总的价格和数量 */
+    handleItemChange(e) {
+        let {index} = e.currentTarget.dataset;
+        let {cart} = this.data;
+        cart[index].checked = !cart[index].checked;
+        this.setCart(cart);
+    },
+    /**全选事件，需要把全选的状态取返，然后再把每一个购物车中的商品选中状态赋值 */
+    handleItemAllChecked() {
+        let {cart, allChecked} = this.data;
+        allChecked = !allChecked;
+        cart.forEach(v=>v.checked=allChecked);
+        // this.setData({allChecked}),在设置购物车里重新计算了allchecked所以这里不需要再写
+        this.setCart(cart);
+    },
+    setCart(cart) {
         //因为循环了两次浪费性能所以用如下方式
         let allChecked=true;
         let totalPrice=0;
@@ -90,6 +108,7 @@ userName: "John Doe"
             totalPrice,
             totalNum
         });
+        wx.setStorageSync("cart", cart);
     },
 
     /**
