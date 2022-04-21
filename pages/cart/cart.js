@@ -1,3 +1,5 @@
+import { showModal } from "../../request/index.js";
+
 /**
  * 获取用户的收货地址
  * 1. 绑定点击事件
@@ -87,6 +89,31 @@ userName: "John Doe"
         cart.forEach(v=>v.checked=allChecked);
         // this.setData({allChecked}),在设置购物车里重新计算了allchecked所以这里不需要再写
         this.setCart(cart);
+    },
+    /**购物车编辑某一商品的个数 */
+    async goodsNumChange(e) {
+        let {changevalue, index} = e.currentTarget.dataset;
+        let {cart} = this.data;
+        const num = cart[index].num;
+        /**当数量为1时不允许再减，应该问用户是否要删除 */
+        if (num+changevalue > 0) {
+            cart[index].num += changevalue;
+            this.setCart(cart);
+        } else {
+            /**微信支持用如下方式直接使用async和await，但考虑到可能
+             * 改变modal的默认样式，也可以封装起来
+             */
+            // const result = await wx.showModal({
+            //     title: '提示',
+            //     content: '要删除当前商品吗？'
+            // });
+            // 使用封装的方法
+            const result = await showModal({content:'要删除当前商品吗？'})
+            if (result.confirm) {
+                cart.splice(index,1);
+                this.setCart(cart);
+            }
+        }
     },
     setCart(cart) {
         //因为循环了两次浪费性能所以用如下方式
