@@ -36,6 +36,12 @@ export function copyArr(oldArr){
     newArr = JSON.parse(JSON.stringify(oldArr));
     return newArr;
 }
+
+/**
+ * 展示modal信息，取消或确定后进行回调处理
+ * @param {content} modal 框要展示的信息 
+ * @returns 
+ */
 export const showModal=({content})=>{
     return new Promise((resolve, reject)=>{
         wx.showModal({
@@ -46,6 +52,30 @@ export const showModal=({content})=>{
             cancelColor: '#000000',
             confirmText: '确定',
             confirmColor: '#3CC51F',
+            success: (result) => {
+                resolve(result);
+            },
+            fail: (err) => {
+                reject(err)
+            },
+            complete: () => {}
+        });
+    })
+}
+
+/**
+ * 弹框提示信息，无交互
+ * @param {title} 提示信息的内容 
+ * @returns 
+ */
+export const showToast=({title})=>{
+    return new Promise((resolve, reject)=>{
+        wx.showToast({
+            title: title,
+            icon: 'none',
+            image: '',
+            duration: 1500,
+            mask: false,
             success: (result) => {
                 resolve(result);
             },

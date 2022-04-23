@@ -1,9 +1,11 @@
-import { showModal } from "../../request/index.js";
+import { showModal, showToast } from "../../request/index.js";
 
 /**
  * 获取用户的收货地址
  * 1. 绑定点击事件
  * 2. 调用小程序内置API获取用户的收货地址wx.chooseAddress
+ * 点击结算
+ * 需要判断是否有商品和地址信息
  */
 Page({
 
@@ -136,6 +138,26 @@ userName: "John Doe"
             totalNum
         });
         wx.setStorageSync("cart", cart);
+    },
+    async handlePay() {
+        const {address,totalNum} = this.data;
+        if (totalNum === 0) {
+            await showToast({title:"您还没有选购商品"})
+            return;
+        }
+        if (!address.cityName) {
+            await showToast({title:"您还没选择收货地址"})
+            return;
+        }
+        wx.navigateTo({
+            url: '/pages/pay/pay',
+            success: (result) => {
+                
+            },
+            fail: () => {},
+            complete: () => {}
+        });
+          
     },
 
     /**
