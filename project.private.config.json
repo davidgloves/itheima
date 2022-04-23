@@ -23,6 +23,13 @@
           "name": "",
           "pathName": "pages/cart/cart",
           "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "Pay",
+          "pathName": "pages/pay/pay",
+          "query": "",
           "scene": null,
           "launchMode": "default"
         }
