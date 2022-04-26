@@ -71,12 +71,6 @@
   border-top: 1px solid #ccc;
   display: flex;
 }
-.footer_tool .all_chk_wrap {
-  flex: 2;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 .footer_tool .total_price_wrap {
   flex: 5;
   padding-right: 15rpx;

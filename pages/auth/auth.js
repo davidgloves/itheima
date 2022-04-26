@@ -7,6 +7,21 @@ Page({
     data: {
 
     },
+    handleGetUserInfo(e){
+        // 1 获取用户信息
+        const {encryptedData, rawData,iv,signature} = e.detail;
+        // 2 获取小程序登录成功后的code
+        wx.login({
+            timeout:10000,
+            success: (result) => {
+                const {code} = result;
+            },
+            fail: () => {},
+            complete: () => {}
+        });
+          
+        console.log(e);
+    },
 
     /**
      * 生命周期函数--监听页面加载

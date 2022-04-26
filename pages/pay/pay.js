@@ -1,11 +1,14 @@
 import { showModal, showToast } from "../../request/index.js";
 
 /**
- * 获取用户的收货地址
- * 1. 绑定点击事件
- * 2. 调用小程序内置API获取用户的收货地址wx.chooseAddress
- * 点击结算
- * 需要判断是否有商品和地址信息
+ * 1.　只有企业账号才能实现微信支付
+ * 2.　企业账号后台小程序必须给开发者加白名单
+ *      一个appid可以同时绑定多个开发者
+ * 　   这些开发者就可以公用这个appid和支付的开发权限
+ * 3.　支付按钮
+ *  先判断缓存中有没有token
+ *  没有就跳转到授权页面，
+ *  如果有token就继续创建订单
  */
 Page({
 
@@ -77,21 +80,7 @@ userName: "John Doe"
         // const allChecked = cart.length>0 ? cart.every(v=>v.checked):false;
         this.setCart(cart);
     },
-    /**购物车选中，1.　修改购物车的选中状态，需要写回缓存，写回data，重新计算总的价格和数量 */
-    handleItemChange(e) {
-        let {index} = e.currentTarget.dataset;
-        let {cart} = this.data;
-        cart[index].checked = !cart[index].checked;
-        this.setCart(cart);
-    },
-    /**全选事件，需要把全选的状态取返，然后再把每一个购物车中的商品选中状态赋值 */
-    handleItemAllChecked() {
-        let {cart, allChecked} = this.data;
-        allChecked = !allChecked;
-        cart.forEach(v=>v.checked=allChecked);
-        // this.setData({allChecked}),在设置购物车里重新计算了allchecked所以这里不需要再写
-        this.setCart(cart);
-    },
+    
     /**购物车编辑某一商品的个数 */
     async goodsNumChange(e) {
         let {changevalue, index} = e.currentTarget.dataset;
@@ -139,25 +128,21 @@ userName: "John Doe"
         });
         wx.setStorageSync("cart", cart);
     },
-    async handlePay() {
-        const {address,totalNum} = this.data;
-        if (totalNum === 0) {
-            await showToast({title:"您还没有选购商品"})
+    async handleOrderPay() {
+        // 1判断缓存有没有token
+        const token = wx.getStorageSync("token");
+        if(!token) {
+            wx.navigateTo({
+                url: '/pages/auth/auth',
+                success: (result) => {
+                    
+                },
+                fail: () => {},
+                complete: () => {}
+            });
             return;
         }
-        if (!address.cityName) {
-            await showToast({title:"您还没选择收货地址"})
-            return;
-        }
-        wx.navigateTo({
-            url: '/pages/pay/pay',
-            success: (result) => {
-                
-            },
-            fail: () => {},
-            complete: () => {}
-        });
-          
+        console.log('已经存在token了')
     },
 
     /**

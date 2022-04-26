@@ -42,7 +42,7 @@
         </view>
     </view>
     <!-- 结算 -->
-    <view class="order_pay_wrap" bind:tap="handlePay">
+    <view class="order_pay_wrap" bind:tap="handleOrderPay">
         支付({{totalNum}})
     </view>
 </view>
