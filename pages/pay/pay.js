@@ -23,17 +23,6 @@ Page({
         totalNum:0
     },
     handleChooseAddress(){
-        /**
-         * cityName: "Guangzhou Shi"
-countyName: "Haizhu Qu"
-detailInfo: "397 Xingang Middle Rd, KeCun"
-errMsg: "chooseAddress:ok"
-nationalCode: "510000"
-postalCode: "510000"
-provinceName: "Guangdong Sheng"
-telNumber: "020-81167888"
-userName: "John Doe"
-         */
         wx.chooseAddress({
             success: (address) => {
                 wx.setStorageSync("address", address);
