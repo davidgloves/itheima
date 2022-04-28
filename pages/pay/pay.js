@@ -1,4 +1,4 @@
-import { showModal, showToast } from "../../request/index.js";
+import { request, showModal, showToast } from "../../request/index.js";
 
 /**
  * 1.　只有企业账号才能实现微信支付
@@ -131,7 +131,20 @@ Page({
             });
             return;
         }
-        console.log('已经存在token了')
+        // 创建订单,准备参数
+        const header = {Authorization:token}
+        const order_price = this.data.totalPrice;
+        const consignee_addr = this.data.address.all;
+        let goods = [];
+        const cart = this.data.cart;
+        cart.forEach(v=>goods.push({
+            goods_id:v.goods_id,
+            goods_number:v.num,
+            goods_price:v.goods_price
+        }));
+        const orderParams = {order_price, consignee_addr, cart};
+        const {order_number} = await request({url:"/my/orders/create", header, data:orderParams,method:"post"});
+        console.log(order_number)
     },
 
     /**

@@ -1,3 +1,5 @@
+import { login, request } from "../../request/index";
+
 // pages/auth/auth.js
 Page({
 
@@ -7,20 +9,25 @@ Page({
     data: {
 
     },
-    handleGetUserInfo(e){
-        // 1 获取用户信息
-        const {encryptedData, rawData,iv,signature} = e.detail;
-        // 2 获取小程序登录成功后的code
-        wx.login({
-            timeout:10000,
-            success: (result) => {
-                const {code} = result;
-            },
-            fail: () => {},
-            complete: () => {}
-        });
-          
-        console.log(e);
+    async handleGetUserInfo(e){
+        try {
+            // 1 获取用户信息
+            const {encryptedData, rawData,iv,signature} = e.detail;
+            // 2 获取小程序登录成功后的code
+            const {code} = await login();
+            const loginParams = {encryptedData, rawData,iv,signature};
+            //获取token，需要企业账号才可以，因为微信支付需要企业账号才可以
+            const res = await request({url:"/users/wxlogin", data:loginParams,method:"post"})
+            console.log(res);
+            // 创建个临时的，只为学习开发用
+            let {token} = {token:"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjIzLCJpYXQiOjE1NjQ3MzAwNzksImV4cCI6MTAwMTU2NDczMDA3OH0.YPt-XeLnjV-_1ITaXGY2FhxmCe4NvXuRnRB8OMCfnPo"}
+            wx.setStorageSync("token", token);
+            wx.navigateBack({
+                delta: 1
+            });
+        } catch (error) {
+            console.log(error);
+        }
     },
 
     /**

@@ -30,6 +30,13 @@
           "name": "Pay",
           "pathName": "pages/pay/pay",
           "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "auth",
+          "pathName": "pages/auth/auth",
+          "query": "",
           "scene": null,
           "launchMode": "default"
         }

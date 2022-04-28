@@ -86,3 +86,21 @@ export const showToast=({title})=>{
         });
     })
 }
+
+/**
+ * Promise 形式的微信login
+ * @returns 
+ */
+export const login=()=>{
+    return new Promise((resolve, reject)=>{
+        wx.login({
+            timeout:10000,
+            success: (result) => {
+                resolve(result);
+            },
+            fail: () => {
+                reject(err)
+            }
+        });
+    })
+}
