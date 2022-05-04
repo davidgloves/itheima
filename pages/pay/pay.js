@@ -1,4 +1,4 @@
-import { request, showModal, showToast } from "../../request/index.js";
+import { request, requestPayment, showModal, showToast } from "../../request/index.js";
 
 /**
  * 1.　只有企业账号才能实现微信支付
@@ -118,33 +118,45 @@ Page({
         wx.setStorageSync("cart", cart);
     },
     async handleOrderPay() {
-        // 1判断缓存有没有token
-        const token = wx.getStorageSync("token");
-        if(!token) {
-            wx.navigateTo({
-                url: '/pages/auth/auth',
-                success: (result) => {
-                    
-                },
-                fail: () => {},
-                complete: () => {}
-            });
-            return;
+        try {
+            // 1判断缓存有没有token
+            const token = wx.getStorageSync("token");
+            if(!token) {
+                wx.navigateTo({
+                    url: '/pages/auth/auth',
+                    success: (result) => {
+                        
+                    },
+                    fail: () => {},
+                    complete: () => {}
+                });
+                return;
+            }
+            // 创建订单,准备参数
+            const header = {Authorization:token}
+            const order_price = this.data.totalPrice;
+            const consignee_addr = this.data.address.all;
+            let goods = [];
+            const cart = this.data.cart;
+            cart.forEach(v=>goods.push({
+                goods_id:v.goods_id,
+                goods_number:v.num,
+                goods_price:v.goods_price
+            }));
+            const orderParams = {order_price, consignee_addr, cart};
+            //  获取订单编号
+            const {order_number} = await request({url:"/my/orders/create", header, data:orderParams,method:"post"});
+            // 发起预支付接口
+            const {pay} = await request({url:"/my/orders/req_unifiedorder", header, data:{order_number},method:"post"});
+            // 支付
+            await requestPayment(pay);
+            // 支付成功后查询订单状态，然后跳转到order界面
+            //　然后toast一下
+            await showToast({title:"支付成功"});
+        } catch (error) {
+            console.log(error);
+            await showToast({title:"支付失败"});
         }
-        // 创建订单,准备参数
-        const header = {Authorization:token}
-        const order_price = this.data.totalPrice;
-        const consignee_addr = this.data.address.all;
-        let goods = [];
-        const cart = this.data.cart;
-        cart.forEach(v=>goods.push({
-            goods_id:v.goods_id,
-            goods_number:v.num,
-            goods_price:v.goods_price
-        }));
-        const orderParams = {order_price, consignee_addr, cart};
-        const {order_number} = await request({url:"/my/orders/create", header, data:orderParams,method:"post"});
-        console.log(order_number)
     },
 
     /**

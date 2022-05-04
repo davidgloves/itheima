@@ -104,3 +104,22 @@ export const login=()=>{
         });
     })
 }
+
+/**
+ * Promise形式的微信支持
+ * @param {object} pay 发起小程序内微信支持
+ * @returns 
+ */
+export const requestPayment=(pay)=>{
+    return new Promise((resolve, reject)=>{
+        wx.requestPayment({
+            ...pay,
+            success: (result) => {
+                resolve(result)
+            },
+            fail: (error) => {
+                reject(error)
+            },
+        });
+    });
+}
