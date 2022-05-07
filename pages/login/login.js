@@ -1,4 +1,6 @@
 // pages/login/login.js
+import { login, request } from "../../request/index";
+
 Page({
 
     /**
@@ -6,6 +8,17 @@ Page({
      */
     data: {
 
+    },
+    async handleGetUserInfo(e){
+        try {
+            const {userInfo} = e.detail;
+            wx.setStorageSync("userInfo", userInfo);
+            wx.navigateBack({
+                delta: 1
+            });
+        } catch (error) {
+            console.log(error);
+        }
     },
 
     /**

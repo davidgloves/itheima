@@ -1,2 +1,5 @@
 <!--pages/user/user.wxml-->
-<text>pages/user/user.wxml</text>
+<navigator class="" target="" url="/pages/login/login" hover-class="navigator-hover" open-type="navigate">
+    登录
+</navigator>
+  
