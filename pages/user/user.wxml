@@ -1,4 +1,16 @@
 <!--pages/user/user.wxml-->
+<view class="user_info_wrap">
+    <view class="user_img_wrap">
+        <image class="user_bg" src="{{userInfo.avatarUrl}}" mode="aspectFit|aspectFill|widthFix" lazy-load="false" binderror="" bindload="" />
+        <view class="user_info">
+            <image class="user_icon" src="" mode="aspectFit|aspectFill|widthFix" lazy-load="false" binderror="" bindload="" />
+            <view class="user_name"></view>
+              
+        </view>
+          
+    </view>
+
+</view>
 <navigator class="" target="" url="/pages/login/login" hover-class="navigator-hover" open-type="navigate">
     登录
 </navigator>
